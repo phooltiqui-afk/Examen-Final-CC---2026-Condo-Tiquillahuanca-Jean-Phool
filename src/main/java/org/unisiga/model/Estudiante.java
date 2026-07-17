@@ -11,7 +11,7 @@ public class Estudiante extends MiembroUniversitario {
     private String matricula;
     private int anioIngreso;
     private float promedioPpa;
-    private List<Inscripcion> inscripciones;
+    private List<Matricula> inscripciones;
 
     public Estudiante(String rut, String nombre, String correo, String matricula, int anioIngreso, float promedioPpa) {
         super(rut, nombre, correo);
@@ -31,7 +31,7 @@ public class Estudiante extends MiembroUniversitario {
      * Realiza el proceso de inscripción en una sección.
      * [REGLAS]: Validar que la sección no sea nula y que cuente con cupos disponibles.
      */
-    public void inscribirSeccion(Seccion seccion) {
+    public void inscribirSeccion(Grupo seccion) {
         // TODO: Implementar la lógica del control de cupos y la creación de la clase de asociación 'Inscripcion'
         // No olvides agregar la nueva inscripción tanto a la lista de este estudiante como a la de la sección.
         throw new UnsupportedOperationException("Método inscribirSeccion() no implementado aún.");
@@ -40,5 +40,5 @@ public class Estudiante extends MiembroUniversitario {
     // Getters y Setters
     public String getMatricula() { return matricula; }
     public float getPromedioPpa() { return promedioPpa; }
-    public List<Inscripcion> getInscripciones() { return inscripciones; }
+    public List<Matricula> getInscripciones() { return inscripciones; }
 }

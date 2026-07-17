@@ -6,16 +6,16 @@ import java.util.List;
 /**
  * Materialización física de una asignatura en el semestre.
  */
-public class Seccion {
+public class Grupo {
     private char idGrupo;
     private int cupoMaximo;
     private String horario;
     private Asignatura asignatura; // Contenedor (Composición)
     private Academico docenteDicta;
-    private List<Inscripcion> inscripciones;
+    private List<Matricula> inscripciones;
 
     // [DISEÑO TÉCNICO]: Constructor package-private para forzar que solo 'Asignatura' (mismo package) lo invoque.
-    Seccion(char idGrupo, int cupoMaximo, String horario, Asignatura asignatura) {
+    Grupo(char idGrupo, int cupoMaximo, String horario, Asignatura asignatura) {
         this.idGrupo = idGrupo;
         this.cupoMaximo = cupoMaximo;
         this.horario = horario;
@@ -34,5 +34,5 @@ public class Seccion {
     public String getHorario() { return horario; }
     public Asignatura getAsignatura() { return asignatura; }
     public Academico getDocenteDicta() { return docenteDicta; }
-    public List<Inscripcion> getInscripciones() { return inscripciones; }
+    public List<Matricula> getInscripciones() { return inscripciones; }
 }

@@ -16,7 +16,7 @@ public class Asignatura {
     private List<Asignatura> prerrequisitos;
     
     // Composiciones fuertes (Sólo Asignatura puede instanciar estos objetos)
-    private List<Seccion> secciones;
+    private List<Grupo> secciones;
     private List<Evaluacion> evaluaciones;
 
     public Asignatura(String codigo, String nombre, int creditosSct) {
@@ -36,7 +36,7 @@ public class Asignatura {
     /**
      * LÓGICA DE COMPOSICIÓN: Instancia una sección semestral y la asocia.
      */
-    public Seccion crearSeccion(char idGrupo, int cupoMaximo, String horario) {
+    public Grupo crearSeccion(char idGrupo, int cupoMaximo, String horario) {
         // TODO: Crear y retornar una nueva sección. Recuerda que el constructor de Sección es restringido.
         throw new UnsupportedOperationException("Método crearSeccion() no implementado aún.");
     }
@@ -53,6 +53,6 @@ public class Asignatura {
     public String getCodigo() { return codigo; }
     public String getNombre() { return nombre; }
     public List<Asignatura> getPrerrequisitos() { return prerrequisitos; }
-    public List<Seccion> getSecciones() { return secciones; }
+    public List<Grupo> getSecciones() { return secciones; }
     public List<Evaluacion> getEvaluaciones() { return evaluaciones; }
 }

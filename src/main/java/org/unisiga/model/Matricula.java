@@ -7,14 +7,14 @@ import java.util.List;
 /**
  * Clase de Asociación que resuelve la relación N:M entre Estudiante y Sección.
  */
-public class Inscripcion {
+public class Matricula {
     private Estudiante estudiante;
-    private Seccion seccion;
+    private Grupo seccion;
     private String estadoInscripcion; // "Inscrito", "Aprobado", "Reprobado"
     private Date fechaInscripcion;
     private List<Calificacion> calificaciones;
 
-    public Inscripcion(Estudiante estudiante, Seccion seccion) {
+    public Matricula(Estudiante estudiante, Grupo seccion) {
         this.estudiante = estudiante;
         this.seccion = seccion;
         this.estadoInscripcion = "Inscrito";
@@ -24,7 +24,7 @@ public class Inscripcion {
 
     // Getters y Setters
     public Estudiante getEstudiante() { return estudiante; }
-    public Seccion getSeccion() { return seccion; }
+    public Grupo getSeccion() { return seccion; }
     public String getEstadoInscripcion() { return estadoInscripcion; }
     public void setEstadoInscripcion(String estado) { this.estadoInscripcion = estado; }
     public Date getFechaInscripcion() { return fechaInscripcion; }
