@@ -43,5 +43,18 @@ public class Main {
             String resNota = ctrlNotas.procesarRegistroNota(inscripcionJuan, certamen1, 6.5f);
             System.out.println("Resultado Nota: " + resNota);
         }
-    }
-}
+
+        // -------------------------------------------------------------------------
+        // 6. LANZAR LA INTERFAZ GRÁFICA (Sintaxis Corregida)
+        // -------------------------------------------------------------------------
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                org.unisiga.view.VentanaPrincipal ventana = new org.unisiga.view.VentanaPrincipal(controller);
+                
+                ventana.setVisible(true); 
+                ventana.setLocationRelativeTo(null); 
+            }
+        }); 
+    } 
+} 
