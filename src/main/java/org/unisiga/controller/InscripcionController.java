@@ -4,32 +4,48 @@ import java.util.ArrayList;
 import java.util.List;
 import org.unisiga.model.*;
 
-/**
- * Controlador de lógica de negocio transaccional. Simula llamadas e interacciones de base de datos.
- */
 public class InscripcionController {
-    private List<Estudiante> estudiantesDb;
-    private List<Asignatura> asignaturasDb;
+    private List<Estudiante> estudiantes = new ArrayList<>();
+    private List<Academico> academicos = new ArrayList<>();
+    private List<Departamento> departamentos = new ArrayList<>();
+    private List<Asignatura> asignaturas = new ArrayList<>();
 
     public InscripcionController() {
-        this.estudiantesDb = new ArrayList<>();
-        this.asignaturasDb = new ArrayList<>();
+        inicializarDatosDemo();
     }
 
-    // Métodos de sembrado (seeding) de bases de datos
-    public void registrarEstudianteEnDb(Estudiante e) { estudiantesDb.add(e); }
-    public void registrarAsignaturaEnDb(Asignatura a) { asignaturasDb.add(a); }
+    private void inicializarDatosDemo() {
+        // 1. Crear Departamentos
+        Departamento deptoCS = new Departamento("DEP-CS", "Computación");
+        departamentos.add(deptoCS);
 
-    /**
-     * Procesa la solicitud de inscripción de asignaturas.
-     * [LÓGICA]: 
-     * 1. Buscar estudiante y asignatura.
-     * 2. Obtener el grupo solicitado por composición.
-     * 3. VALIDAR PRERREQUISITOS (Auto-asociación): El alumno debe tener aprobado el prerrequisito en su historial.
-     * 4. Delegar la transacción al dominio del modelo.
-     */
-    public String inscribirSeccionEstudiante(String matricula, String codigoAsignatura, char idGrupo) {
-        // TODO: Implementar la orquestación completa de la inscripción según la regla de negocio
-        throw new UnsupportedOperationException("El controlador de inscripción no está implementado.");
+        // 2. Crear Académicos usando tu constructor exacto (rut, nombre, correo, idEmpleado, tipoContrato)
+        Academico prof = new Academico("11111111-1", "Dr. Alan Turing", "aturing@unisiga.edu", "EM001", "Principal");
+        // Bidireccionalidad segura solicitada por el TODO de Departamento
+        prof.setDepartamento(deptoCS);
+        deptoCS.getAcademicos().add(prof);
+        academicos.add(prof);
+
+        // 3. Crear Estudiantes usando tu constructor exacto (rut, nombre, correo, matricula, anioIngreso, promedioPpa)
+        estudiantes.add(new Estudiante("22222222-2", "Jean Phool", "jphool@unisiga.edu", "20261001", 2026, 6.2f));
+        estudiantes.add(new Estudiante("33333333-3", "Ana Gomez", "agomez@unisiga.edu", "20261002", 2025, 5.8f));
+
+        // Note: Asignatura fábrica de grupos y evaluaciones (Composición) se gestionará dinámicamente o simulada aquí.
     }
+
+    public void registrarEstudiante(String rut, String nombre, String correo, String matricula, int anio, float ppa) {
+        estudiantes.add(new Estudiante(rut, nombre, correo, matricula, anio, ppa));
+    }
+
+    public void registrarAcademico(String rut, String nombre, String correo, String idEmp, String contrato, Departamento depto) {
+        Academico ac = new Academico(rut, nombre, correo, idEmp, contrato);
+        ac.setDepartamento(depto);
+        depto.getAcademicos().add(ac);
+        academicos.add(ac);
+    }
+
+    public List<Estudiante> getEstudiantes() { return estudiantes; }
+    public List<Academico> getAcademicos() { return academicos; }
+    public List<Departamento> getDepartamentos() { return departamentos; }
+    public List<Asignatura> getAsignaturas() { return asignaturas; }
 }

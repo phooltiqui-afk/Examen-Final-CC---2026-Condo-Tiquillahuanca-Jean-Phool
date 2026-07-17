@@ -3,56 +3,49 @@ package org.unisiga.model;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Catálogo general de asignaturas. Controla las secciones y evaluaciones unificadas.
- * [EVALUACIÓN]: Control absoluto de ciclos de vida mediante Composición Fuerte y Auto-asociación.
- */
 public class Asignatura {
-    private String codigo;
+    private String codigoAsig;
     private String nombre;
-    private int creditosSct;
-    
-    // Auto-asociación recursiva para prerrequisitos
-    private List<Asignatura> prerrequisitos;
-    
-    // Composiciones fuertes (Sólo Asignatura puede instanciar estos objetos)
-    private List<Grupo> secciones;
-    private List<Evaluacion> evaluaciones;
+    private int creditos;
+    private List<Asignatura> prerrequisitos; // Relación recursiva 
+    private List<Grupo> grupos;              // Composición Fuerte
+    private List<Evaluacion> evaluaciones;    // Composición Fuerte
+    private int contadorEvaluaciones = 1;
 
-    public Asignatura(String codigo, String nombre, int creditosSct) {
-        this.codigo = codigo;
+    public Asignatura(String codigoAsig, String nombre, int creditos) {
+        this.codigoAsig = codigoAsig;
         this.nombre = nombre;
-        this.creditosSct = creditosSct;
+        this.creditos = creditos;
         this.prerrequisitos = new ArrayList<>();
-        this.secciones = new ArrayList<>();
+        this.grupos = new ArrayList<>();
         this.evaluaciones = new ArrayList<>();
     }
 
-    public void agregarPrerrequisito(Asignatura asig) {
-        // TODO: Agregar asignatura de prerrequisito evitando duplicados
-        throw new UnsupportedOperationException("Método agregarPrerrequisito() no implementado aún.");
+    // Método para cumplir con el requisito de Prerrequisitos N:M Recursivo
+    public void agregarPrerrequisito(Asignatura pre) {
+        if (pre != null && !this.prerrequisitos.contains(pre)) {
+            this.prerrequisitos.add(pre);
+        }
     }
 
-    /**
-     * LÓGICA DE COMPOSICIÓN: Instancia una sección semestral y la asocia.
-     */
-    public Grupo crearSeccion(char idGrupo, int cupoMaximo, String horario) {
-        // TODO: Crear y retornar una nueva sección. Recuerda que el constructor de Sección es restringido.
-        throw new UnsupportedOperationException("Método crearSeccion() no implementado aún.");
+    // COMPOSICIÓN FUERTE: Asignatura fabrica sus propios grupos
+    public Grupo crearGrupo(char idGrupo, int cupoMaximo, String horario) {
+        Grupo nuevoGrupo = new Grupo(idGrupo, cupoMaximo, horario, this);
+        this.grupos.add(nuevoGrupo);
+        return nuevoGrupo;
     }
 
-    /**
-     * LÓGICA DE COMPOSICIÓN: Instancia una evaluación unificada para la asignatura.
-     */
-    public Evaluacion crearEvaluacion(int id, String titulo, float ponderacion) {
-        // TODO: Crear y retornar una nueva evaluación oficial de la cátedra.
-        throw new UnsupportedOperationException("Método crearEvaluacion() no implementado aún.");
+    // COMPOSICIÓN FUERTE: Asignatura fabrica sus propias evaluaciones
+    public Evaluacion agregarEvaluacion(String titulo, float ponderacion) {
+        Evaluacion nuevaEval = new Evaluacion(contadorEvaluaciones++, titulo, ponderacion, this);
+        this.evaluaciones.add(nuevaEval);
+        return nuevaEval;
     }
 
-    // Getters
-    public String getCodigo() { return codigo; }
+    // Getters y Setters
+    public String getCodigoAsig() { return codigoAsig; }
     public String getNombre() { return nombre; }
     public List<Asignatura> getPrerrequisitos() { return prerrequisitos; }
-    public List<Grupo> getSecciones() { return secciones; }
+    public List<Grupo> getGrupos() { return grupos; }
     public List<Evaluacion> getEvaluaciones() { return evaluaciones; }
 }
